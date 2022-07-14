@@ -14,14 +14,14 @@ router.get('/notes', function(req, res){
 })
 
 router.post('/notes', function(req, res){
-    const saveNotes = fs.readFileSync(path.join(__dirname,"../db/db.json"), "utf-8")
-    console.log('what type?', typeof saveNotes)  
+    const saveNotes = JSON.parse(fs.readFileSync(path.join(__dirname,"../db/db.json"), "utf-8"))
+   
     let newNote = req.body;
     let id = saveNotes.length.toString();
     // console.log(newNote);
-    // newNote.id = id;
+    newNote.id = id;
     saveNotes.push(newNote);
-    fs.writeFileSync("../db/db.json", JSON.stringify(saveNotes));
+    fs.writeFileSync("db/db.json", JSON.stringify(saveNotes));
     res.json(saveNotes);
 })
 
