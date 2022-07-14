@@ -14,12 +14,14 @@ router.get('/notes', function(req, res){
 })
 
 router.post('/notes', function(req, res){
-    let saveNotes = JSON.parse(fs.readFileSync(__dirname,"../db/db.json", 'utf-8'));
+    const saveNotes = fs.readFileSync(path.join(__dirname,"../db/db.json"), "utf-8")
+    console.log('what type?', typeof saveNotes)  
     let newNote = req.body;
     let id = saveNotes.length.toString();
-    newNote.id = id;
+    // console.log(newNote);
+    // newNote.id = id;
     saveNotes.push(newNote);
-    fs.writeFileSynce(__dirname,"../db/db.json", JSON.stringify(saveNotes));
+    fs.writeFileSync("../db/db.json", JSON.stringify(saveNotes));
     res.json(saveNotes);
 })
 
@@ -28,6 +30,6 @@ module.exports = router
 // build out routes to save --get route, post route, save route
 // const store = require(), store file needs to go in db file, store .js
 // store.js: class, json parsing, and stringifying to get data in database
-
+// create middleware?
 
 
